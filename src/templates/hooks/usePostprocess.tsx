@@ -79,6 +79,7 @@ const usePostProcess = () => {
 
     return [screenCamera, screenScene, screen, renderTarget]
   }, [])
+
   useEffect(() => {
     const { width, height } = size
     const { w, h } = {
@@ -97,6 +98,7 @@ const usePostProcess = () => {
 
     gl.render(screenScene, screenCamera)
   }, 1)
+
   return null
 }
 

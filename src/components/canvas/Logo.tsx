@@ -18,9 +18,9 @@ export default function Logo({ route, ...props }) {
   useCursor(hovered)
   useFrame((state, delta) => {
     const t = state.clock.getElapsedTime()
-    mesh.current.rotation.y = Math.sin(t) * (Math.PI / 8)
-    mesh.current.rotation.x = Math.cos(t) * (Math.PI / 8)
-    mesh.current.rotation.z -= delta / 4
+    // mesh.current.rotation.y += delta
+    // mesh.current.rotation.x += Math.cos(t) * 0.03
+    // mesh.current.rotation.z -= delta / 4
   })
 
   return (
@@ -32,9 +32,9 @@ export default function Logo({ route, ...props }) {
         {/* @ts-ignore */}
         <Line worldUnits points={points} color={color.logoColor} lineWidth={0.15} />
         {/* @ts-ignore */}
-        <Line worldUnits points={points} color={color.logoColor} lineWidth={0.15} rotation={[0, 0, 1]} />
+        <Line worldUnits points={points} color={color.logoColor} lineWidth={0.15} rotation={[0, 0, 0.25 * Math.PI]} />
         {/* @ts-ignore */}
-        <Line worldUnits points={points} color={color.logoColor} lineWidth={0.15} rotation={[0, 0, -1]} />
+        <Line worldUnits points={points} color={color.logoColor} lineWidth={0.15} rotation={[0, 0, -0.25 * Math.PI]} />
         <mesh onClick={() => router.push(route)} onPointerOver={() => hover(true)} onPointerOut={() => hover(false)}>
           <sphereGeometry args={[0.55, 64, 64]} />
           <meshPhysicalMaterial roughness={0} color={hovered ? 'hotpink' : color.logoColor} />

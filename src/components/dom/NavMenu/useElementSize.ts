@@ -17,7 +17,7 @@ function useEventListener<
   eventName: K,
   handler: (event: HTMLElementEventMap[K]) => void,
   element?: RefObject<T>,
-  options?: boolean | AddEventListenerOptions,
+  options?: AddEventListenerOptions,
 ) {
   const savedHandler = useRef(handler)
 
@@ -29,13 +29,17 @@ function useEventListener<
     const targetElement = element?.current
     if (!(targetElement && targetElement.addEventListener)) return
 
-    const listener: typeof handler = (event) => savedHandler.current(event)
+    const controller = new AbortController()
+    targetElement.addEventListener(
+      eventName,
+      (event) => savedHandler.current(event),
+      {
+        ...options,
+        signal: controller.signal,
+      },
+    )
 
-    targetElement.addEventListener(eventName, listener, options)
-
-    return () => {
-      targetElement.removeEventListener(eventName, listener, options)
-    }
+    return () => controller.abort()
   }, [eventName, element, options])
 }
 

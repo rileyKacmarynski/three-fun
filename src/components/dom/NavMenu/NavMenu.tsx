@@ -123,7 +123,10 @@ function NavMenu() {
             initial={false}
             key={-1}
             variants={{
-              ...itemVariants,
+              open: {
+                ...itemVariants.open,
+                transition: { delay: 0.25 }
+              },
               closed: {
                 ...itemVariants.closed,
                 transition: { delay: 0.25 }
